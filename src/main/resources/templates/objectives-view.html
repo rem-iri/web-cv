@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Objectives</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Web CV</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/objective}">Objectives</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<div class="container text-center">
+
+    <h1 class="display-2">Career Objectives</h1>
+
+    <div class="mt-3" style="display:flex; flex-direction: row; justify-content: end;">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+            Add Objective
+        </button>
+    </div>
+
+    <div class="list-group">
+        <div th:each="item : ${objectives}" class="list-group-item list-group-item-action" style="text-align:left">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><span th:text="${item.name}"/></h5>
+                <small>Target Date: <span th:text="${#dates.format(item.targetDate, 'dd/MM/yyyy')}"/></small>
+            </div>
+            <p class="mb-1">Description: <span th:text="${item.description}"/></p>
+            <p class="mb-1">Reason: <span th:text="${item.reason}"/></p>
+            <div>
+                <small>Completed on: <span th:text="${#dates.format(item.dateCompleted, 'dd/MM/yyyy')}"/></small>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a th:href="@{'/objective/delete/'+${item.id}}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                <a th:href="@{'/objective/edit/'+${item.id}}"><button type="button" class="btn btn-warning text-white">Edit</button></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add an Objective</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/objective}" th:object="${objective}"
+                          method="post" style="max-width: 600px; margin: 0 auto;" onsubmit="pre">
+                        <div class="m-3">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="objective-name">Name</label>
+                                    <input class="form-control" type="text" th:field="*{name}" id="objective-name"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="reason">Reason</label>
+                                    <input class="form-control" type="text" th:field="*{reason}" id="reason"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" th:field="*{description}" id="description"/>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="target-date">Target Date</label>
+                                    <input class="form-control" type="date" th:field="*{targetDate}" id="target-date"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="date-completed">Date Completed</label>
+                                    <input class="form-control" type="date" th:field="*{dateCompleted}" id="date-completed"/>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-primary">Add Objective</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

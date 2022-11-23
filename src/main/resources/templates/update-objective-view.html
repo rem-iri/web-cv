@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <form
+        th:action="@{'/objective/update/' + ${objective.id}}"
+        th:object="${objective}"
+        method="post"
+        onsubmit="pre">
+    <div class="m-3">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="objective-name">Name</label>
+          <input class="form-control" type="text" th:field="*{name}" id="objective-name"/>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="reason">Reason</label>
+          <input class="form-control" type="text" th:field="*{reason}" id="reason"/>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="description">Description</label>
+        <textarea class="form-control" th:field="*{description}" id="description"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="target-date">Target Date</label>
+          <input class="form-control" type="date" th:field="*{targetDate}" id="target-date"/>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="date-completed">Date Completed</label>
+          <input class="form-control" type="date" th:field="*{dateCompleted}" id="date-completed"/>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
